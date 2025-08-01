@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action ou Vérité</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6b6b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Action ou Vérité</h1>
+        </header>
+
+        <!-- Section Configuration -->
+        <section id="config-section" class="section active">
+            <div class="config-card">
+                <h2>Configuration de la partie</h2>
+                
+                <div class="input-group">
+                    <label for="player-count">Nombre de joueurs :</label>
+                    <input type="number" id="player-count" min="2" max="10" value="3">
+                    <button id="validate-players" class="btn primary">Valider</button>
+                </div>
+
+                <div id="players-form" class="players-form hidden">
+                    <h3>Informations des joueurs</h3>
+                    <div id="players-list"></div>
+                </div>
+
+                <div id="difficulty-section" class="difficulty-section hidden">
+                    <h3>Choisissez le niveau de difficulté</h3>
+                    <div class="carousel-container">
+                        <button class="carousel-btn prev" id="carousel-prev">‹</button>
+                        <div class="carousel" id="difficulty-carousel">
+                            <!-- Les cartes seront générées dynamiquement -->
+                        </div>
+                        <button class="carousel-btn next" id="carousel-next">›</button>
+                    </div>
+                </div>
+
+                <button id="save-config" class="btn success hidden">Sauvegarder et commencer</button>
+            </div>
+        </section>
+
+        <!-- Section Jeu -->
+        <section id="game-section" class="section hidden">
+            <div class="game-card">
+                <h2>🎮 Partie en cours</h2>
+                
+                <div class="game-controls">
+                    <button id="choose-player" class="btn primary large">Choisir un joueur</button>
+                    
+                    <div class="current-player-display hidden" id="current-player-display">
+                        <h3>Joueur sélectionné :</h3>
+                        <div class="player-name" id="current-player-name"></div>
+                    </div>
+
+                    <div class="action-buttons hidden" id="action-buttons">
+                        <button id="action-btn" class="btn action">🎯 Action</button>
+                        <button id="truth-btn" class="btn truth">💭 Vérité</button>
+                    </div>
+                </div>
+
+                <div class="result-display hidden" id="result-display">
+                    <div class="result-card">
+                        <h3 id="result-type"></h3>
+                        <p id="result-text"></p>
+                    </div>
+                </div>
+
+                <div class="game-footer">
+                    <button id="new-round" class="btn secondary">Nouveau tour</button>
+                    <button id="change-config" class="btn outline">Changer la configuration</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Debug (cachée en production) -->
+        <section id="debug-section" class="debug-section">
+            <details>
+                <summary>Debug Info</summary>
+                <div id="debug-info"></div>
+            </details>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+
+    <script>
+        document.getElementById('change-config').addEventListener('click', () => {
+            if (confirm('⚠️ Cette action supprimera toutes les données sauvegardées. Continuer ?')) {
+                localStorage.clear();
+                console.log('LocalStorage vidé.');
+                location.reload(); // Optionnel : recharge la page après suppression
+            }
+        });
+    </script>
+</body>
+</html>
