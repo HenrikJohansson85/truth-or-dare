@@ -56,7 +56,7 @@ const cards = [
 const actions = [
   {
     id: 'A1',
-    text: '{other}, met une chiquette {player}.',
+    text: '{other}, met une chiquette à {player}.',
     genre: 'importe',       // 'homme' | 'femme' | 'importe'
     hard: 1
   },
