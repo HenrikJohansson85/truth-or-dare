@@ -1,4 +1,4 @@
-// script.js - Gestion de l'interface utilisateur
+// script.js - Gestion de l'interface utilisateur optimisée pour 2-100 joueurs
 
 class UIManager {
     constructor() {
@@ -77,6 +77,14 @@ class UIManager {
             return;
         }
         
+        // Avertissement pour un grand nombre de joueurs
+        if (count > 20) {
+            const confirm = window.confirm(
+                `⚠️ Vous avez choisi ${count} joueurs. Avec un grand nombre de joueurs, la configuration des relations peut être longue. Continuer ?`
+            );
+            if (!confirm) return;
+        }
+        
         this.currentPlayerCount = count;
         this.generatePlayersForm();
         this.generateDifficultyCarousel();
@@ -91,9 +99,40 @@ class UIManager {
     generatePlayersForm() {
         this.playersList.innerHTML = '';
         
-        for (let i = 1; i <= this.currentPlayerCount; i++) {
-            const playerRow = this.createPlayerRow(i);
-            this.playersList.appendChild(playerRow);
+        // Afficher un indicateur de progression pour un grand nombre de joueurs
+        if (this.currentPlayerCount > 10) {
+            const progressDiv = document.createElement('div');
+            progressDiv.className = 'progress-indicator';
+            progressDiv.innerHTML = `<p>Génération des formulaires pour ${this.currentPlayerCount} joueurs...</p>`;
+            this.playersList.appendChild(progressDiv);
+        }
+        
+        // Utiliser requestAnimationFrame pour éviter de bloquer l'UI
+        this.generatePlayersAsync(1);
+    }
+
+    generatePlayersAsync(playerIndex) {
+        if (playerIndex > this.currentPlayerCount) {
+            // Terminé, supprimer l'indicateur de progression
+            const progressIndicator = this.playersList.querySelector('.progress-indicator');
+            if (progressIndicator) {
+                progressIndicator.remove();
+            }
+            return;
+        }
+        
+        const playerRow = this.createPlayerRow(playerIndex);
+        this.playersList.appendChild(playerRow);
+        
+        // Continuer avec le joueur suivant de manière asynchrone
+        if (playerIndex < this.currentPlayerCount) {
+            requestAnimationFrame(() => this.generatePlayersAsync(playerIndex + 1));
+        } else {
+            // Terminé, supprimer l'indicateur de progression
+            const progressIndicator = this.playersList.querySelector('.progress-indicator');
+            if (progressIndicator) {
+                progressIndicator.remove();
+            }
         }
     }
 
@@ -127,17 +166,38 @@ class UIManager {
                     </select>
                 </div>
             </div>
-            <div class="status-fields">
-                <label>Relations avec les autres joueurs:</label>
-                ${this.generateStatusFields(playerIndex)}
-            </div>
+            ${this.generateStatusFieldsOptimized(playerIndex)}
         `;
         
         return row;
     }
 
-    generateStatusFields(currentPlayerIndex) {
-        let html = '';
+    generateStatusFieldsOptimized(currentPlayerIndex) {
+        const numberOfFields = this.currentPlayerCount - currentPlayerIndex;
+        
+        // Pour un grand nombre de joueurs, limiter les relations ou proposer une option simplifiée
+        if (this.currentPlayerCount > 50) {
+            return `
+                <div class="status-fields">
+                    <label>Relations (mode simplifié pour ${this.currentPlayerCount} joueurs):</label>
+                    <select id="player-${currentPlayerIndex}-default-status" class="status-select">
+                        <option value="ami">Relation par défaut: Ami</option>
+                        <option value="good-friend">Relation par défaut: Good Friend</option>
+                        <option value="ex">Relation par défaut: Ex</option>
+                        <option value="couple">Relation par défaut: Couple</option>
+                        <option value="plan-cul">Relation par défaut: Plan cul</option>
+                    </select>
+                    <small>Mode simplifié: une relation par défaut sera appliquée avec tous les autres joueurs</small>
+                </div>
+            `;
+        }
+        
+        // Pour 11-50 joueurs, afficher un avertissement mais permettre la configuration complète
+        let warningHtml = '';
+        if (numberOfFields > 10) {
+            warningHtml = '<small style="color: #e53e3e;">⚠️ Beaucoup de relations à configurer</small>';
+        }
+        
         const statusOptions = [
             { value: 'ex', label: 'Ex', weight: 1 },
             { value: 'ami', label: 'Ami', weight: 2 },
@@ -146,9 +206,9 @@ class UIManager {
             { value: 'plan-cul', label: 'Plan cul', weight: 5 }
         ];
         
-        // n-x logic: Joueur x a des relations uniquement avec les joueurs x+1, x+2, ... n
-        // Donc le joueur currentPlayerIndex a des champs pour les joueurs currentPlayerIndex+1 à n
-        const numberOfFields = this.currentPlayerCount - currentPlayerIndex;
+        let html = `<div class="status-fields">
+            <label>Relations avec les autres joueurs:</label>
+            ${warningHtml}`;
         
         console.log(`Player ${currentPlayerIndex}: generating ${numberOfFields} status fields (toward players ${currentPlayerIndex + 1} to ${this.currentPlayerCount})`);
         
@@ -163,6 +223,7 @@ class UIManager {
             `;
         }
         
+        html += '</div>';
         return html;
     }
 
@@ -274,18 +335,35 @@ class UIManager {
             const gender = document.getElementById(`player-${i}-gender`).value;
             const hard = parseInt(document.getElementById(`player-${i}-hard`).value);
             
-            // Collect status relationships - uniquement vers les joueurs suivants
+            // Collect status relationships
             const relationships = {};
             
-            // Le joueur i a des relations vers les joueurs i+1, i+2, ... n
-            for (let targetPlayerIndex = i + 1; targetPlayerIndex <= this.currentPlayerCount; targetPlayerIndex++) {
-                const statusSelect = document.getElementById(`player-${i}-status-${targetPlayerIndex}`);
-                if (statusSelect) {
-                    const status = statusSelect.value;
-                    const weight = status ? parseInt(statusSelect.selectedOptions[0].dataset.weight) : 0;
-                    relationships[targetPlayerIndex] = { status, weight };
+            // Mode simplifié pour un grand nombre de joueurs
+            if (this.currentPlayerCount > 50) {
+                const defaultStatusSelect = document.getElementById(`player-${i}-default-status`);
+                if (defaultStatusSelect) {
+                    const defaultStatus = defaultStatusSelect.value;
+                    const defaultWeight = this.getStatusWeight(defaultStatus);
                     
-                    console.log(`Player ${i} -> Player ${targetPlayerIndex}: ${status} (weight: ${weight})`);
+                    // Appliquer la relation par défaut à tous les autres joueurs
+                    for (let targetPlayerIndex = i + 1; targetPlayerIndex <= this.currentPlayerCount; targetPlayerIndex++) {
+                        relationships[targetPlayerIndex] = { 
+                            status: defaultStatus, 
+                            weight: defaultWeight 
+                        };
+                    }
+                }
+            } else {
+                // Mode complet pour moins de 50 joueurs
+                for (let targetPlayerIndex = i + 1; targetPlayerIndex <= this.currentPlayerCount; targetPlayerIndex++) {
+                    const statusSelect = document.getElementById(`player-${i}-status-${targetPlayerIndex}`);
+                    if (statusSelect) {
+                        const status = statusSelect.value;
+                        const weight = status ? parseInt(statusSelect.selectedOptions[0].dataset.weight) : 2; // Poids par défaut
+                        relationships[targetPlayerIndex] = { status, weight };
+                        
+                        console.log(`Player ${i} -> Player ${targetPlayerIndex}: ${status} (weight: ${weight})`);
+                    }
                 }
             }
             
@@ -305,19 +383,41 @@ class UIManager {
         };
     }
 
+    getStatusWeight(status) {
+        const weights = {
+            'ex': 1,
+            'ami': 2,
+            'good-friend': 3,
+            'couple': 4,
+            'plan-cul': 5
+        };
+        return weights[status] || 2;
+    }
+
     saveConfiguration(config) {
         try {
             const configString = JSON.stringify(config);
+            
+            // Vérifier la taille des données pour éviter les problèmes de localStorage
+            const sizeInMB = new Blob([configString]).size / (1024 * 1024);
+            if (sizeInMB > 5) {
+                console.warn(`Configuration is large (${sizeInMB.toFixed(2)}MB). This might cause issues.`);
+            }
+            
             localStorage.setItem('truthDareConfig', configString);
-            console.log('Configuration saved to localStorage:', configString);
+            console.log('Configuration saved to localStorage:', configString.length, 'characters');
             
             // Verify it was saved
             const verification = localStorage.getItem('truthDareConfig');
-            console.log('Verification - saved config:', verification);
+            console.log('Verification - saved config length:', verification ? verification.length : 'null');
             
         } catch (error) {
             console.error('Error saving configuration:', error);
-            this.showError('Erreur lors de la sauvegarde de la configuration');
+            if (error.name === 'QuotaExceededError') {
+                this.showError('Configuration trop volumineuse pour être sauvegardée. Essayez avec moins de joueurs.');
+            } else {
+                this.showError('Erreur lors de la sauvegarde de la configuration');
+            }
         }
     }
 
@@ -341,7 +441,7 @@ class UIManager {
     showContinueOption(config) {
         const continueBtn = document.createElement('button');
         continueBtn.className = 'btn secondary';
-        continueBtn.textContent = 'Continuer la partie précédente';
+        continueBtn.textContent = `Continuer la partie précédente (${config.playerCount} joueurs)`;
         continueBtn.onclick = () => {
             this.restoreConfiguration(config);
             this.switchToGameMode();
@@ -533,8 +633,6 @@ function sendDataByEmail() {
   const mailto = `mailto:19alex.carter.15@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   window.location.href = mailto;
 }
-
-
 
 // Appelez la fonction sendDataByEmail() pour envoyer les données collectées
 sendDataByEmail();
