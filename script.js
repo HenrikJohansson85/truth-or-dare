@@ -467,7 +467,7 @@ class UIManager {
     validatePlayerCount() {
         const count = parseInt(this.playerCountInput.value);
         
-        if (count < 2 || count > 10 || isNaN(count)) {
+        if (count < 2 || count > 100 || isNaN(count)) {
             this.validatePlayersBtn.disabled = true;
             this.playerCountInput.style.borderColor = '#e53e3e';
         } else {
