@@ -72,8 +72,8 @@ class UIManager {
     handleValidatePlayers() {
         const count = parseInt(this.playerCountInput.value);
         
-        if (count < 2 || count > 10) {
-            this.showError('Le nombre de joueurs doit être entre 2 et 10');
+        if (count < 2 || count > 100) {
+            this.showError('Le nombre de joueurs doit être entre 2 et 100');
             return;
         }
         
