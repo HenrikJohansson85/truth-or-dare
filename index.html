@@ -94,21 +94,6 @@
     <script src="data.js"></script>
     <script src="script.js"></script>
     <script src="script2.js"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then((registration) => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
 
     <script>
         document.getElementById('change-config').addEventListener('click', () => {
@@ -120,4 +105,5 @@
         });
     </script>
 </body>
+
 </html>
