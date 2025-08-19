@@ -14,7 +14,7 @@ const cards = [
     id: 'sfw',
     title: 'SFW',
     imgUrl: 'https://tse1.mm.bing.net/th/id/OIP.MUYaWR8zmKacN0crMzb04QHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
-    hardMin: 1,
+    hardMin: 0,
     hardMax: 4,
     hard: 2
   },
@@ -22,7 +22,7 @@ const cards = [
     id: 'ados',
     title: 'Ados',
     imgUrl: 'https://www.brealsousvitre.fr/wp-content/uploads/2021/03/adolescents.jpg',
-    hardMin: 2,
+    hardMin: 0,
     hardMax: 6,
     hard: 4
   },
@@ -30,7 +30,7 @@ const cards = [
     id: 'hard',
     title: 'Hard',
     imgUrl: 'https://th.bing.com/th/id/R.10e7455ef65c83110aecc5d0541d24dd?rik=H3rw313%2b9XUz%2bQ&pid=ImgRaw&r=0https://m.media-amazon.com/images/I/81dVS0CDsUL._AC_SX569_.jpg',
-    hardMin: 3,
+    hardMin: 0,
     hardMax: 8,
     hard: 6
   },
@@ -860,3 +860,4 @@ const clothes = [
   'haut',
   'bas'
 ];
+
