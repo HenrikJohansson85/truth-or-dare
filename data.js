@@ -57,7 +57,7 @@ const actions = [
   {
     id: 'A1',
     text: '{other}, met une chiquette à {player}.',
-    genre: 'importe',       // 'homme' | 'femme' | 'importe'
+    genre: 'importe',
     hard: 1
   },
   {
@@ -118,7 +118,7 @@ const actions = [
     id: 'A11',
     text: '{player} et {other}, prenez une gorgée.',
     genre: 'importe',
-    hard: 5
+    hard: 6
   },
   {
     id: 'A12',
@@ -196,7 +196,7 @@ const actions = [
     id: 'A24',
     text: '{player}, retire le {clothes} de {other} avec uniquement ta bouche.',
     genre: 'femme',
-    hard: 7
+    hard: 8
   },
   {
     id: 'A25',
@@ -381,17 +381,17 @@ const verites = [
   },
   {
     id: 'V4',
-    text: '{player}, quels sont les positions sexuelles que tu connais en {number} minutes ?',
+    text: '{player}, quels sont les positions sexuelles que tu connais en {number}0 secondes ?',
     genre: 'importe'
   },
   {
     id: 'V5',
     text: "{player}, que pense tu de l'idée que ta partenaire termine en solo si elle n'a pas eu d'orgasme?",
-    genre: 'importe'
+    genre: 'homme'
   },
   {
     id: 'V6',
-    text: '{player}, préfère tu que {other} te baise dans une fôret, un ascenseur, une plage ou un cinema?',
+    text: '{player}, préfère tu que {other} te baise dans une fôret, un ascenseur, une plage ou un cinéma?',
     genre: 'importe'
   },
   {
@@ -411,7 +411,7 @@ const verites = [
   },
   {
     id: 'V10',
-    text: '{player}, en faisant le 69 tu préfère être en haut ou en bas?',
+    text: '{player}, en faisant le 69 préfère tu être en haut ou en bas?',
     genre: 'importe'
   },
   {
