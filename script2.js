@@ -269,8 +269,17 @@ class GameLogic {
         
         // Replace {other}
         processed = processed.replace(/{other}/g, () => {
-            const otherPlayer = this.selectOtherPlayer();
-            return otherPlayer ? otherPlayer.name : 'un autre joueur';
+            const playerGender = this.currentPlayer.gender;
+            if (playerGender == "femme") {
+                const otherPlayer = this.selectOtherPlayer('homme');
+                return otherPlayer ? otherPlayer.name : 'un autre joueur';
+            }
+            else {
+                if (playerGender == "homme") {
+                    const otherPlayer = this.selectOtherPlayer('femme');
+                    return otherPlayer ? otherPlayer.name : 'une autre joueuse';
+                }
+            }
         });
         
         // Replace {otherh} - other male player
