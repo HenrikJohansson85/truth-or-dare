@@ -195,7 +195,7 @@ const actions = [
   {
     id: 'A24',
     text: '{player}, retire le {clothes} de {other} avec uniquement ta bouche.',
-    genre: 'femme',
+    genre: 'importe',
     hard: 8
   },
   {
@@ -290,7 +290,7 @@ const actions = [
   },
   {
     id: 'A38',
-    text: '{player}, fait du tam-tam avec les fesse de {otherf} si {other} est satisfait, alors tu peux enbrasse {otherf}.',
+    text: '{player}, fait du tam-tam avec les fesse de {other} si {other} est satisfait, alors tu peux enbrasse {otherf}.',
     genre: 'importe',
     hard: 8
   },
@@ -371,12 +371,12 @@ const verites = [
   },
   {
     id: 'V2',
-    text: "{player}, d'après toi qui a la plus grosse?",
+    text: "{player}, d'après toi qui a la plus grosse? Le où les joueurs pensant être l'élu leverons la main, si plusieurs personnes lèvent la main, ils disent à voix haute les nombres.",
     genre: 'importe'
   },
   {
     id: 'V3',
-    text: "{player}, d'après toi qui a la plus petite?",
+    text: "{player}, d'après toi qui a la plus petite? Le où les joueurs pensant être l'élu leverons la main, si plusieurs personnes lèvent la main, ils disent à voix haute les nombres.",
     genre: 'importe'
   },
   {
