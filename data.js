@@ -34,7 +34,7 @@ const cards = [
     hardMax: 8,
     hard: 6
   },
-{
+  {
     id: 'extreme',
     title: 'Extrême',
     imgUrl: 'https://i.etsystatic.com/44130503/r/il/884238/5044223465/il_794xN.5044223465_7lx8.jpg',
@@ -168,7 +168,7 @@ const actions = [
     genre: 'importe',
     hard: 6
   },
-  { 
+  {
     id: 'A20',
     text: 'Tout le monde remet ses vêtements.',
     genre: 'importe',
@@ -371,17 +371,17 @@ const verites = [
   },
   {
     id: 'V2',
-    text: "{player}, d'après toi qui a la plus grosse? Le où les joueurs pensant être l'élu leverons la main, si plusieurs personnes lèvent la main, ils disent à voix haute les nombres.",
+    text: `{player}, d'après toi qui a la plus grosse? Le où les joueurs pensant être "les élus" leverons la main, si plusieurs personnes lèvent la main, ils disent à voix haute les dimensions.`,
     genre: 'importe'
   },
   {
     id: 'V3',
-    text: "{player}, d'après toi qui a la plus petite? Le où les joueurs pensant être l'élu leverons la main, si plusieurs personnes lèvent la main, ils disent à voix haute les nombres.",
+    text: `{player}, d'après toi qui a la plus petite? Le où les joueurs pensant être "les élus" leverons la main, si plusieurs personnes lèvent la main, ils disent à voix haute les dimensions.`,
     genre: 'importe'
   },
   {
     id: 'V4',
-    text: '{player}, quels sont les positions sexuelles que tu connais en {number}0 secondes ?',
+    text: '{player}, quels sont les positions sexuelles que tu connais en {number+24} secondes ?',
     genre: 'importe'
   },
   {
@@ -476,7 +476,7 @@ const verites = [
   },
   {
     id: 'V23',
-    text: '{player}, combien de films x regardes-tu par semaine ?',
+    text: '{player}, combien de films x regardes-tu par semaine en moyenne ?',
     genre: 'importe'
   },
   {
@@ -713,7 +713,7 @@ const verites = [
     id: 'V71',
     text: "{player}, avec combien de personnes as tu déjà fait l'amour en une semaine?",
     genre: 'importe'
-  }, 
+  },
   {
     id: 'V72',
     text: "{player}, entre la zoophilie, la nécrophilie et la pédophilie ; lequel t'exite le plus?",
@@ -812,11 +812,11 @@ const verites = [
   {
     id: 'V90',
     text: "{player}, il y a le feu chez toi, tu n'es vêtu que d'une petite serviette; ta voisine {other} te propose de dormir chez toi, que répond tu?",
-    genre: 'importe'
+    genre: 'femme'
   },
   {
     id: 'V91',
-    text: "{player}, partage à {otherh} la recette miracle pour donner à {otherf}",
+    text: '{player}, partage à {otherh} la recette miracle pour donner du "plaisir" à {otherf}',
     genre: 'importe'
   },
   {
@@ -830,12 +830,12 @@ const verites = [
     genre: 'importe'
   },
   {
-    id:'V94',
+    id: 'V94',
     text: "{player}, quelle est la chose la plus bizarre que tu pourrais utiliser comme lubrifiant?",
     genre: 'importe'
   },
   {
-    id:'V95',
+    id: 'V95',
     text: "{player}, quelle est la chose la plus bizarre que tu pourrais utiliser comme sextoy?",
     genre: 'importe'
   }
@@ -843,16 +843,16 @@ const verites = [
 
 // 4) Couleurs pour {color}
 const colors = [
-    "rouge",
-    "bleu",
-    "vert",
-    "noir",
-    "blanc",
-    "jaune",
-    "violet",
-    "rose",
-    "gris",
-    "orange"
+  "rouge",
+  "bleu",
+  "vert",
+  "noir",
+  "blanc",
+  "jaune",
+  "violet",
+  "rose",
+  "gris",
+  "orange"
 ];
 
 // 5) Vêtements pour {clothes}
