@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎯 Action ou Vérité</h1>
+            <h1>Action ou Vérité</h1>
         </header>
 
         <!-- Section Configuration -->
@@ -62,8 +62,8 @@
                     </div>
 
                     <div class="action-buttons hidden" id="action-buttons">
-                        <button id="action-btn" class="btn action">🎯 Action</button>
-                        <button id="truth-btn" class="btn truth">💭 Vérité</button>
+                        <button id="action-btn" class="btn action">Action</button>
+                        <button id="truth-btn" class="btn truth">Vérité</button>
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
 
     <script>
         document.getElementById('change-config').addEventListener('click', () => {
-            if (confirm('⚠️ Cette action supprimera toutes les données sauvegardées. Continuer ?')) {
+            if (confirm('Cette action supprimera toutes les données sauvegardées. Continuer ?')) {
                 localStorage.clear();
                 console.log('LocalStorage vidé.');
                 location.reload(); // Optionnel : recharge la page après suppression
