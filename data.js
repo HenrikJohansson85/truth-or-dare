@@ -188,8 +188,8 @@ const actions = [
   },
   {
     id: 'A23',
-    text: '{other}, met toi en tailleur, {player} assis toi en tailleur sur lui pendant {number-2} tours.',
-    genre: 'importe',
+    text: '{otherf}, met toi en tailleur, {player} assis toi en tailleur sur lui pendant {number-2} tours.',
+    genre: 'homme',
     hard: 5
   },
   {
